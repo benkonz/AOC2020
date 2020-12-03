@@ -15,4 +15,11 @@ defmodule AOC do
   def hello do
     :world
   end
+
+  def map_input_file(filename) do
+    File.read(filename)
+    |> elem(1)
+    |> String.split("\n")
+    |> Enum.map(fn s -> Integer.parse(s) |> elem(0) end)
+  end
 end
