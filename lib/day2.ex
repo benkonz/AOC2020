@@ -1,14 +1,18 @@
 defmodule AOC.Day2 do
   def parse_input(filename) do
-    File.read(filename) |> elem(1) |> String.split("\n")
+    File.read(filename)
+    |> elem(1)
+    |> String.split("\n")
+    |> Enum.map(fn line ->
+      regex = ~r/^([[:digit:]]+)\-([[:digit:]]+) ([[:ascii:]])\: ([[:word:]]+)$/
+      Regex.run(regex, line)
+    end)
   end
 
   def part1(input) do
     input
-    |> Enum.with_index()
-    |> Enum.reduce(0, fn {line, i}, acc ->
-      regex = ~r/^([[:digit:]]+)\-([[:digit:]]+) ([[:ascii:]])\: ([[:word:]]+)$/
-      [_str, min, max, char, password] = Regex.run(regex, line)
+    |> Enum.reduce(0, fn line, acc ->
+      [_str, min, max, char, password] = line
       min = Integer.parse(min) |> elem(0)
       max = Integer.parse(max) |> elem(0)
 
@@ -27,6 +31,22 @@ defmodule AOC.Day2 do
         acc
       else
         acc + 1
+      end
+    end)
+  end
+
+  def part2(input) do
+    input
+    |> Enum.reduce(0, fn line, acc ->
+      [_str, min, max, char, password] = line
+      pos1 = (Integer.parse(min) |> elem(0)) - 1
+      pos2 = (Integer.parse(max) |> elem(0)) - 1
+
+      if (String.at(password, pos1) == char && String.at(password, pos2) != char) ||
+           (String.at(password, pos1) != char && String.at(password, pos2) == char) do
+        acc + 1
+      else
+        acc
       end
     end)
   end
