@@ -29,4 +29,13 @@ defmodule AOC.Day3 do
   def part1(input) do
     traverse(input, 0, 0, 3, 1)
   end
+
+  def part2(input) do
+    slopes = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
+
+    slopes
+    |> Enum.reduce(1, fn [dx, dy], acc ->
+      acc * traverse(input, 0, 0, dx, dy)
+    end)
+  end
 end
