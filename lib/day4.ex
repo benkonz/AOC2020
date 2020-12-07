@@ -21,11 +21,7 @@ defmodule AOC.Day4 do
         end)
         |> MapSet.new()
 
-      without_optional =
-        optional
-        |> Enum.reduce(fields, fn field, acc ->
-          MapSet.delete(acc, field)
-        end)
+      without_optional = MapSet.difference(fields, optional)
 
       if MapSet.equal?(without_optional, required) do
         acc + 1
@@ -57,11 +53,7 @@ defmodule AOC.Day4 do
         end)
         |> MapSet.new()
 
-      without_optional =
-        optional
-        |> Enum.reduce(fields, fn field, acc ->
-          MapSet.delete(acc, field)
-        end)
+      without_optional = MapSet.difference(fields, optional)
 
       if MapSet.equal?(without_optional, required) do
         acc + 1
