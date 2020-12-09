@@ -1,8 +1,7 @@
 defmodule AOC.Day6 do
   def parse_input(input) do
     input
-    |> File.read()
-    |> elem(1)
+    |> File.read!()
     |> String.split("\n\n")
   end
 
