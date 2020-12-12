@@ -23,4 +23,32 @@ defmodule AOC.Day10 do
     three_jolt_diffs = three_jolt_diffs + 1
     one_jolt_diffs * three_jolt_diffs
   end
+
+  def count(voltage, adapters, mem) do
+    if voltage == 0 do
+      {1, mem}
+    else
+      if MapSet.member?(adapters, voltage) do
+        if Map.has_key?(mem, voltage) do
+          {Map.get(mem, voltage), mem}
+        else
+          {first, mem} = count(voltage - 1, adapters, mem)
+          {second, mem} = count(voltage - 2, adapters, mem)
+          {third, mem} = count(voltage - 3, adapters, mem)
+          answer = first + second + third
+          mem = Map.put(mem, voltage, answer)
+          {answer, mem}
+        end
+      else
+        {0, mem}
+      end
+    end
+  end
+
+  def part2(input) do
+    adapters = MapSet.new(input)
+    biggest = input |> Enum.sort() |> List.last()
+    adapters = MapSet.put(adapters, biggest + 3)
+    count(biggest + 3, adapters, Map.new()) |> elem(0)
+  end
 end
