@@ -15,5 +15,4 @@ defmodule AOC do
   def hello do
     :world
   end
-
 end
